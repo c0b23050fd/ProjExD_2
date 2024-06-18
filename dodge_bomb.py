@@ -6,9 +6,13 @@ import time
 
 
 WIDTH, HEIGHT = 1600, 900
-delta = {pg.K_UP:(0,-5), pg.K_DOWN:(0,5), pg.K_LEFT:(-5,0), pg.K_RIGHT:(5,0)}
+delta = {pg.K_UP: (0,-5), 
+         pg.K_DOWN: (0,5), 
+         pg.K_LEFT: (-5,0), 
+         pg.K_RIGHT: (5,0)}
 accs = [a for a in range(1,11)]
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     """
@@ -49,14 +53,14 @@ def main():
     kk_img_u = pg.transform.rotozoom(kk_img_f, 90, 2.0)
     kk_img_d = pg.transform.rotozoom(kk_img, 90, 2.0)
 
-    kk_dct = {(-5,0):kk_img_l,
-              (-5,-5):kk_img_ul,
-              (0,-5):kk_img_u,
-              (5,-5):kk_img_ur,
-              (5,0):kk_img_r,
-              (5,5):kk_img_dr,
-              (0,5):kk_img_d,
-              (-5,5):kk_img_dl}
+    kk_dct = {(-5,0): kk_img_l,
+              (-5,-5): kk_img_ul,
+              (0,-5): kk_img_u,
+              (5,-5): kk_img_ur,
+              (5,0): kk_img_r,
+              (5,5): kk_img_dr,
+              (0,5): kk_img_d,
+              (-5,5): kk_img_dl}
     
     shape = kk_dct[(-5,0)]
 
