@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import pygame as pg
+import time
 
 
 WIDTH, HEIGHT = 1600, 900
@@ -10,6 +11,11 @@ accs = [a for a in range(1,11)]
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
+    """
+    引数：こうかとんRect，または，爆弾Rect
+    戻り値：真理値タプル（横方向，縦方向）
+    画面内ならTrue／画面外ならFalse
+    """
     yoko, tate = True, True
     if rct.left < 0 or WIDTH < rct.right:  # 横方向判定
         yoko = False
@@ -21,6 +27,16 @@ def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("fig/pg_bg.jpg")
+    bg_blk = pg.Surface((WIDTH,HEIGHT))
+    bg_blk.set_colorkey((0,0,0))
+    pg.draw.rect(bg_blk,(0,0,0),(0,0,WIDTH, HEIGHT))
+    bg_blk.set_alpha(50)
+    bg_end = bg_blk.get_rect()
+    bg_end.center = 900, 400
+
+    fonto = pg.font.Font(None, 80)
+    txt = fonto.render("Game Over", True, (255,255,255))
+    
     kk_img = pg.image.load("fig/3.png")
     kk_img_f = pg.transform.flip(kk_img, True, False)
 
@@ -66,6 +82,9 @@ def main():
                 return
             
         if kk_rct.colliderect(bm_img):
+            screen.blit(bg_blk,[0,0])
+            screen.blit(txt, [900,400])
+            time.sleep(5)
             return #gameover判定
         
         screen.blit(bg_img, [0, 0]) 
