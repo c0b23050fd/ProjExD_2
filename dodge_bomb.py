@@ -47,11 +47,15 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
 
-    bm_sur = pg.Surface((20,20))
-    bm_sur.set_colorkey((0,0,0))
-    pg.draw.circle(bm_sur,(0, 0, 255), (10, 10), 10)
+    bm_imgs = []
+
+    for r in range(1,11):
+        bm_sur = pg.Surface((20*r,20*r))
+        bm_imgs.append(bm_sur)
+        bm_sur.set_colorkey((0,0,0))
+        pg.draw.circle(bm_sur,(20*r, 0, 255), (10*r, 10*r), 10*r)
     bm_img = bm_sur.get_rect()
-    bm_img.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
+    bm_img.center = random.randint(10, WIDTH-10), random.randint(10, HEIGHT-10)
     vx, vy = +5, +5
     clock = pg.time.Clock()
     tmr = 0
@@ -84,13 +88,13 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-        bm_img.move_ip(vx, vy)
+        bm_img.move_ip(vx*accs[min((tmr//50),9)], vy*accs[min((tmr//50),9)])
         yoko, tate = check_bound(bm_img)
         if not yoko:
             vx *= -1
         if not tate:
             vy *= -1
-        screen.blit(bm_sur, bm_img)
+        screen.blit(bm_imgs[min(tmr//50,9)], bm_img)
         pg.display.update()
         tmr += 1
         clock.tick(50)
